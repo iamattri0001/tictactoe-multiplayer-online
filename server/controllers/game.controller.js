@@ -100,13 +100,22 @@ export const createGame = (req, res) => {
 
 export const makeMove = (req, res) => {
   try {
-    const { gameId } = req.params;
+    let { x, y, name, gameId } = req.body;
     if (!gameId || !activeGames[gameId]) {
       return res.json({ error: "Invalid gameId" }).status(400);
     }
+    x = parseInt(x);
+    y = parseInt(y);
 
-    const { x, y, name } = req.query;
-    if (!x || !y || !name || x > 2 || y > 2 || x < 0 || y < 0) {
+    if (
+      typeof x === "undefined" ||
+      typeof y == "undefined" ||
+      !name ||
+      x > 2 ||
+      y > 2 ||
+      x < 0 ||
+      y < 0
+    ) {
       return res.json({ error: "Invalid move" }).status(400);
     }
 
@@ -133,7 +142,7 @@ export const makeMove = (req, res) => {
       return res.json({ win: true, winType });
     }
 
-    return res.json({ gameId, game });
+    return res.json({ game });
   } catch (error) {
     console.error("error in /api/game/move", error.message);
     return res.json({ error: "Internal server error" }).status(500);
@@ -142,9 +151,8 @@ export const makeMove = (req, res) => {
 
 export const joinGame = (req, res) => {
   try {
-    const { gameId } = req.params;
-    const { name } = req.query;
-
+    const { name, gameId } = req.body;
+    console.log(name, gameId);
     if (!name) {
       return res.json({ error: "provide a name" }).status(400);
     }
@@ -181,3 +189,7 @@ export const joinGame = (req, res) => {
     return res.json({ error: "Internal server error" }).status(500);
   }
 };
+
+export const reconnectGame = (req, res) => {
+  
+}

@@ -3,12 +3,14 @@ import {
   createGame,
   joinGame,
   makeMove,
+  reconnectGame,
 } from "../controllers/game.controller.js";
 
 const router = express.Router();
 
 router.get("/create", createGame);
-router.get("/move/:gameId", makeMove);
-router.get("/join/:gameId", joinGame);
+router.post("/move", makeMove);
+router.post("/join", joinGame);
+router.post("/reconnect", reconnectGame);
 
 export default router;

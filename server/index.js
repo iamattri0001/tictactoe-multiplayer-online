@@ -8,6 +8,7 @@ app.get("/", (req, res) => {
   return res.json({ active: true }).status(200);
 });
 
+app.use(express.json());
 app.use("/api/game", gameRoutes);
 
 server.listen(PORT, () => {

@@ -4,6 +4,7 @@ import { Navigate, Route, Routes, redirect } from "react-router-dom";
 import Create from "./components/Create";
 import Lobby from "./components/Lobby";
 import { Toaster } from "react-hot-toast";
+import Join from "./components/Join";
 
 const App = () => {
   const { gameId } = useGameContext();
@@ -18,6 +19,10 @@ const App = () => {
         <Route
           path="/create"
           element={!gameId ? <Create /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/join"
+          element={!gameId ? <Join /> : <Navigate to="/" />}
         />
       </Routes>
       <Toaster position="top-center" reverseOrder={false} />

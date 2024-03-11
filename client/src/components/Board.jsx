@@ -2,18 +2,11 @@ import React from "react";
 import toast from "react-hot-toast";
 import { MdClose } from "react-icons/md";
 import { TbOval } from "react-icons/tb";
+import { useGameContext } from "../contexts/GameContext";
 const Board = () => {
-  const board = [
-    ["X", null, null],
-    [null, "O", "O"],
-    ["X", null, null],
-  ];
-
-  const sym = "X";
-
-  const handleMove = ({ x, y }) => {
-    toast.success(`${x} ${y}`);
-  };
+  const { game, name, gameId, handleMakeMove} = useGameContext();
+  const { board, turn } = game;
+  const sym = game.symbol[name];
 
   const boardIndices = [
     [0, 0],
@@ -26,7 +19,7 @@ const Board = () => {
     [2, 1],
     [2, 2],
   ];
-
+  
   return (
     <div className="grid-cols-3 grid gap-5">
       {boardIndices.map(([x, y], i) => (
@@ -35,7 +28,7 @@ const Board = () => {
             if (board[x][y]) {
               return;
             }
-            handleMove({ x, y });
+            handleMakeMove({ x, y });
           }}
           x={x}
           y={y}
